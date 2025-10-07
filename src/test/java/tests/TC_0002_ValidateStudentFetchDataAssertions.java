@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TC_0002_ValidateStudentFetchDataAssertions {
-    String getStudentEndpoint="http://thetestingworldapi.com/api/studentsDetails/10697157";
+    String getStudentEndpoint="http://thetestingworldapi.com/api/studentsDetails/10697226";
 
     @Test
     public void validateStudentFetchData(){
@@ -33,6 +33,6 @@ public class TC_0002_ValidateStudentFetchDataAssertions {
         Assert.assertTrue(response.asString().contains("true"));
 
         //validate body content with JsonPath
-        Assert.assertEquals(response.jsonPath().getString("data.first_name"),"First_Test");
+        Assert.assertEquals(response.jsonPath().getString("data.first_name"),"Lena01");
     }
 }

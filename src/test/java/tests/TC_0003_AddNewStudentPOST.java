@@ -6,7 +6,7 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TC_0003_AddNewStudentPostTest {
+public class TC_0003_AddNewStudentPOST {
 
     String postEndPoint = "https://thetestingworldapi.com/api/studentsDetails";
     @Test
@@ -22,7 +22,7 @@ public class TC_0003_AddNewStudentPostTest {
         Response postresponse = postRequest.post(postEndPoint);
         System.out.println(postresponse.statusCode());
         Assert.assertEquals(postresponse.statusCode(),201);
-        Assert.assertEquals(postresponse.jsonPath().getString("first_name"), "Lena");
+        Assert.assertEquals(postresponse.jsonPath().getString("data.first_name"), "Lena");
         System.out.println(postresponse.asPrettyString());
 
 

@@ -1,4 +1,4 @@
-package tests;
+package tests.udemy_TC;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

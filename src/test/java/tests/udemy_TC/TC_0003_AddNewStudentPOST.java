@@ -1,4 +1,4 @@
-package tests;
+package tests.udemy_TC;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -14,7 +14,7 @@ public class TC_0003_AddNewStudentPOST {
 
         // Pre-requisite
         RequestSpecification postRequest = RestAssured.given();
-        postRequest.body("{\"id\":1,\"first_name\":\"Lena\",\"middle_name\":\"Vladimirovna\",\"last_name\":\"Usc\",\"date_of_birth\":\"04/11/2001\"}");
+        postRequest.body("{\"id\":1,\"first_name\":\"Lena02\",\"middle_name\":\"Vladimirovna\",\"last_name\":\"Usc\",\"date_of_birth\":\"04/11/2001\"}");
         postRequest.header("content-type", "application/json");
 
 
@@ -22,7 +22,7 @@ public class TC_0003_AddNewStudentPOST {
         Response postresponse = postRequest.post(postEndPoint);
         System.out.println(postresponse.statusCode());
         Assert.assertEquals(postresponse.statusCode(),201);
-        Assert.assertEquals(postresponse.jsonPath().getString("data.first_name"), "Lena");
+        Assert.assertEquals(postresponse.jsonPath().getString("first_name"), "Lena02");
         System.out.println(postresponse.asPrettyString());
 
 

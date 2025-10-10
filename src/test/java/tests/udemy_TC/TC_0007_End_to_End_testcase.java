@@ -12,8 +12,9 @@ public class TC_0007_End_to_End_testcase {
     String lastName = "Uscelemova";
     String middleName = "Jennifer";
     String dob = "12/12/1995";
+    String updatedMiddleName = "JenniferUpdated";
 
-    String myPostRequestBody = "{\"id\":1,\"first_name\":\"FNAME\",\"middle_name\":\"MNAME\",\"last_name\":\"LNAME\",\"date_of_birth\":\"DOB\"}";
+    String myPostRequestBody = "{\"id\":ID,\"first_name\":\"FNAME\",\"middle_name\":\"MNAME\",\"last_name\":\"LNAME\",\"date_of_birth\":\"DOB\"}";
 
     @Test
     public void addAndValidateStudent() {
@@ -41,6 +42,14 @@ public class TC_0007_End_to_End_testcase {
         Assert.assertEquals(getResponse.jsonPath().getString("data.last_name"),lastName);
         Assert.assertEquals(getResponse.jsonPath().getString("data.date_of_birth"),dob);
 
+        //Put Request / Update Middle Name
+
+        RequestSpecification putRequestSpecification = RestAssured.given();
+        putRequestSpecification.body(myPostRequestBody.replace("FNAME", firstName).replace("LNAME", lastName).replace("DOB", dob).replace("MNAME", updatedMiddleName).replace("ID", "2"));
+        putRequestSpecification.header("content-type", "application/json");
+
+        Response putResponse = putRequestSpecification.put(applicationBaseUrl+"api/studentsDetails/"+studentId);
+        Assert.assertEquals(putResponse.statusCode(),200);
 
 
 

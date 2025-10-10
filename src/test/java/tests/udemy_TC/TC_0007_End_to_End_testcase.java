@@ -21,7 +21,7 @@ public class TC_0007_End_to_End_testcase {
 
         // Send a Post Request/ Adding a New Student to app
         RequestSpecification postRequestSpecification = RestAssured.given();
-        postRequestSpecification.body(myPostRequestBody.replace("FNAME", firstName).replace("LNAME", lastName).replace("DOB", dob).replace("MNAME", middleName));
+        postRequestSpecification.body(myPostRequestBody.replace("FNAME", firstName).replace("LNAME", lastName).replace("DOB", dob).replace("MNAME", middleName).replace("ID", "1"));
         postRequestSpecification.header("content-type", "application/json");
 
         Response postResponse = postRequestSpecification.post(applicationBaseUrl+"api/studentsDetails");
@@ -45,13 +45,30 @@ public class TC_0007_End_to_End_testcase {
         //Put Request / Update Middle Name
 
         RequestSpecification putRequestSpecification = RestAssured.given();
-        putRequestSpecification.body(myPostRequestBody.replace("FNAME", firstName).replace("LNAME", lastName).replace("DOB", dob).replace("MNAME", updatedMiddleName).replace("ID", "2"));
+        putRequestSpecification.body(myPostRequestBody.replace("FNAME", firstName).replace("LNAME", lastName).replace("DOB", dob).replace("MNAME", updatedMiddleName).replace("ID", studentId));
         putRequestSpecification.header("content-type", "application/json");
 
         Response putResponse = putRequestSpecification.put(applicationBaseUrl+"api/studentsDetails/"+studentId);
-        Assert.assertEquals(putResponse.statusCode(),200);
+        Assert.assertEquals(putResponse.getStatusCode(),200);
 
+        // Validate
+        Response getUpdatedResponse = RestAssured.get(applicationBaseUrl+"api/studentsDetails/"+studentId);
 
+        Assert.assertEquals(getUpdatedResponse.statusCode(),200);
+        Assert.assertEquals(getUpdatedResponse.jsonPath().getString("data.middle_name"),updatedMiddleName);
+        System.out.println(getUpdatedResponse.jsonPath().getString("data.middle_name"));
+
+        //Delete Student from Application
+
+        Response deleteRequest = RestAssured.delete(applicationBaseUrl+"api/studentsDetails/"+studentId);
+        Assert.assertEquals(deleteRequest.statusCode(),200);
+
+        // Get Request / Check that student is deleted
+
+        Response getDeletedResponse = RestAssured.get(applicationBaseUrl+"api/studentsDetails/"+studentId);
+
+        System.out.println(getDeletedResponse.asPrettyString());
+        Assert.assertEquals(getDeletedResponse.jsonPath().getString("msg"),"No data Found");
 
     }
 }

@@ -36,7 +36,7 @@ public class TC_0015_AddNewStudentPOST_Body_ExternalJsonRead {
         request.baseUri(postEndPoint);
         request.basePath(basePath);
         request.header("content-type", "application/json");
-        request.body(jsonBody);
+        request.body(inputData);
         System.out.println(request.log().all());
 
     }
